@@ -5,6 +5,13 @@
 Bot_token.txt
 Sauce_token.txt
 
+# Filetypes
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+
 # User-specific files
 *.suo
 *.user

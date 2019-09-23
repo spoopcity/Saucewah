@@ -170,8 +170,12 @@ class sauceWah:
                                                 #print(data)
                                                 self.send_plain_text(self.chat_id, data, reply_id)
                                     else:
-                                        self.send_plain_text(self.chat_id, "Uhm, I couldnt find anything...", reply_id)
-
+                                        print("Scanning url")
+                                        headerurl = results['header']['query_image_display']
+                                        print(headerurl)
+                                        self.send_plain_text(self.chat_id, ("I did not find anything. However, it is possible that it may be found on https://kheina.com/ \nInput saucenao.com/{} in the URL field.").format(headerurl), reply_id)
+                                        
+                                    print("ok")
                                 except Exception as e:
                                     print(str(e))
 
@@ -251,7 +255,7 @@ class sauceWah:
 # -1001065317964 echobase
 # -1001439347866 fake
 def main():
-    runSauce = sauceWah(botToken, sauceToken, chat_id = -1001065317964)
+    runSauce = sauceWah(botToken, sauceToken, chat_id = -1001439347866)
 
     while True:
         runSauce.scan()

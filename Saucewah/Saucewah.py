@@ -4,9 +4,12 @@ import time
 import io
 import urllib
 from PIL import Image as image
+from selenium import webdriver
 
 import os
 
+#driver = webdriver.Chrome("C:/Users/Some Idiot/source/repos/Saucewah/Saucewah/chromedriver.exe")  # Optional argument, if not specified will search path.
+driver = webdriver.Chrome("/usr/local/bin/chromedriver.*")  # Optional argument, if not specified will search path.
 
 # Build bitmask
 index_hmags='0'
@@ -170,14 +173,31 @@ class sauceWah:
                                                 #print(data)
                                                 self.send_plain_text(self.chat_id, data, reply_id)
                                     else:
-                                        print("Scanning url")
-                                        headerurl = results['header']['query_image_display']
+                                        headerurl = "https://saucenao.com/{}".format(results['header']['query_image_display'])
                                         print(headerurl)
-                                        self.send_plain_text(self.chat_id, ("I did not find anything. However, it is possible that it may be found on https://kheina.com/ \nInput saucenao.com/{} in the URL field.").format(headerurl), reply_id)
+                                        driver.get('https://kheina.com/')
+                                        time.sleep(1)
+                                        url_box = driver.find_element_by_name('url')
+                                        url_box.send_keys(headerurl)
+                                        time.sleep(1)
+                                        submit_box = driver.find_element_by_xpath('//*[@id="content"]/div[1]/form/input[3]')
+                                        submit_box.click()
+                                        time.sleep(5)
+                                        result_box = driver.find_element_by_xpath('//*[@id="content"]/div[1]/div[2]/a')
+                                        result_rating = driver.find_element_by_id("percent").text
+
+                                        if float(result_rating[:-1]) > 80.0:
+                                            #print(result_box.get_attribute("href"))
+                                            self.send_plain_text(self.chat_id, result_box.get_attribute("href"), reply_id)
+                                        else:
+                                            self.send_plain_text(self.chat_id, "Uhm, I couldnt find anything...", reply_id)
+
+
+                                        #self.send_plain_text(self.chat_id, ("I did not find anything. However, it is possible that it may be found on https://kheina.com/ \nInput saucenao.com/{} in the URL field.").format(headerurl), reply_id)
                                         
-                                    print("ok")
                                 except Exception as e:
                                     print(str(e))
+                                    
 
                                 return True
 
@@ -185,8 +205,6 @@ class sauceWah:
                     print("Failed to download processed file.")
 
         return False
-
-
 
     ## Helper Functs ##
     def send_plain_text(self, chat_id, plain_text, reply_id):

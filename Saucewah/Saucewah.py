@@ -255,7 +255,7 @@ class sauceWah:
 # -1001065317964 echobase
 # -1001439347866 fake
 def main():
-    runSauce = sauceWah(botToken, sauceToken, chat_id = -1001439347866)
+    runSauce = sauceWah(botToken, sauceToken, chat_id = -1001065317964)
 
     while True:
         runSauce.scan()

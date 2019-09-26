@@ -5,6 +5,7 @@ import io
 import urllib
 from PIL import Image as image
 from selenium import webdriver
+import random
 
 import os
 
@@ -108,13 +109,19 @@ class sauceWah:
                         try:
                             if message["message"]["reply_to_message"]["photo"]:
                                 print("possible photo")
-                                # If we have our photo
-                                tgPhoto = message["message"]["reply_to_message"]["photo"][0]["file_id"]
-                                result = self.process_file(tgPhoto, message["message"]["message_id"])
-                                if result:
-                                    print("Done posting.")
+
+                                rand = random.randint(0,20)
+                                if rand == 20:
+                                    self.send_plain_text(self.chat_id, "gay", message["message"]["message_id"])
+
                                 else:
-                                    print("This file could not be processed.")
+                                    # If we have our photo
+                                    tgPhoto = message["message"]["reply_to_message"]["photo"][0]["file_id"]
+                                    result = self.process_file(tgPhoto, message["message"]["message_id"])
+                                    if result:
+                                        print("Done posting.")
+                                    else:
+                                        print("This file could not be processed.")
 
                         except:
                             print("Either no photo was found or no reply_to_message and photo")                

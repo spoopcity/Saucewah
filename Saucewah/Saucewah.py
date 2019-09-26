@@ -10,7 +10,7 @@ import random
 import os
 
 #driver = webdriver.Chrome("C:/Users/Some Idiot/source/repos/Saucewah/Saucewah/chromedriver.exe")  # Optional argument, if not specified will search path.
-driver = webdriver.Chrome("/usr/local/bin/chromedriver.*")  # Optional argument, if not specified will search path.
+driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
 
 # Build bitmask
 index_hmags='0'
